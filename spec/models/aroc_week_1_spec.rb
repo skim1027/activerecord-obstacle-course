@@ -75,8 +75,8 @@ describe 'ActiveRecord Obstacle Course, Week 1' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
-require 'pry'; binding.pry
-    orders_of_500_and_700 =  Order.where("amount = 500").or(Order.where("amount = 700"))
+    orders_of_500_and_700 =  Order.where("amount = 500 or amount = 700")
+    orders_of_700_and_1000 =  Order.where("amount = 1000").or(Order.where("amount = 700"))
     # ------------------------------------------------------------
 
     # Expectation
@@ -89,11 +89,12 @@ require 'pry'; binding.pry
     expected_objects = [@item_1, @item_4, @item_2]
 
     # ----------------------- Using Ruby -------------------------
-    items = Item.all.select { |item| ids_to_find.include?(item.id) }
+    # items = Item.all.select { |item| ids_to_find.include?(item.id) }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    items = Item.find(@item_1.id, @item_4.id, @item_2.id)
     # ------------------------------------------------------------
 
     # Expectation
@@ -104,11 +105,13 @@ require 'pry'; binding.pry
     ids_to_find = [@order_1.id, @order_3.id, @order_5.id, @order_7.id]
 
     # ----------------------- Using Ruby -------------------------
-    orders = Order.all.select { |order| ids_to_find.include?(order.id) }
+    # orders = Order.all.select { |order| ids_to_find.include?(order.id) }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    orders = Order.where(id: ids_to_find)
+    orders = Order.find(@order_3.id,@order_5.id,  @order_1.id, @order_7.id)
     # ------------------------------------------------------------
 
     # Expectation
@@ -118,11 +121,12 @@ require 'pry'; binding.pry
   it '7. finds orders with an amount between 700 and 1000' do
     expected_result = [@order_11, @order_13, @order_8, @order_10, @order_15, @order_14, @order_12]
     # ----------------------- Using Ruby -------------------------
-    orders_between_700_and_1000 = Order.all.select { |order| order.amount >= 700 && order.amount <= 1000 }
+    # orders_between_700_and_1000 = Order.all.select { |order| order.amount >= 700 && order.amount <= 1000 }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    orders_between_700_and_1000 = Order.where("amount >= 700 and amount <= 1000")
     # ------------------------------------------------------------
 
     # Expectation
@@ -138,6 +142,8 @@ require 'pry'; binding.pry
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+
+    orders_less_than_550 = Order.where("amount < 550")
     # ------------------------------------------------------------
 
     # Expectation

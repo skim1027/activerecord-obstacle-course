@@ -27,7 +27,9 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    # Solution goes here.
+    # require 'pry'; binding.pry
+    users = User.joins(orders: :order_items).where("order_items.item_id = #{@item_8.id}").distinct.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
